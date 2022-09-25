@@ -1,0 +1,66 @@
+"""
+Reverse Linked List
+Grind 75 #19
+LC #206 Easy
+
+Solution:
+time complexity = O(n) - traverse linked list exactly once
+space complexity = O(1)
+"""
+
+from typing import Optional
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        prev = None
+        curr = head
+
+        while curr:
+            nextnode = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nextnode
+
+        return prev
+
+"""
+My first solution:
+time complexity = O(2n) - traverse linked list exactly twice
+space complexity = O(1)? -- copy existing node pointer, create stack
+
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        # base case
+        if not head: return None
+        
+        # go through existing linked list and add all but final node to stack
+        # once done, store new head in a variable
+        # using stack, go back through list to add pointers and reverse list
+        # remove pointer from initial head node
+        # finally, return the new head of the reversed list
+        stack = []
+        
+        while head.next:
+            stack.append(head)
+            head = head.next
+        
+        newHead = head
+        
+        while stack:
+            head.next = stack.pop()
+            head = head.next
+        
+        # remember, whole of while loop will execute before checking again
+        head.next = None
+
+        return newHead
+"""

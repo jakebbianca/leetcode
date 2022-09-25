@@ -1,0 +1,32 @@
+"""
+Climbing Stairs
+Grind 75 # 17
+LC #70 Easy
+
+Solution:
+time complexity = O(n) - go through each item once
+space complexity = O(1)
+"""
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        
+        # base cases
+        if n == 1: return 1
+        if n == 2: return 2
+        
+        # store base case values
+        x = 1
+        y = 2
+        
+        # update Fibonacci sum variables until approaching n
+        # return sum of sum variables
+        if n > 3:
+            for i in range(3, n):
+                if i % 2 == 1:
+                    x = x + y
+                else:
+                    y = x + y
+        
+        return x + y

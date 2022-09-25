@@ -1,0 +1,70 @@
+"""
+3Sum
+Grind 75 #30
+LC 15 Medium
+
+Time O(n^2) -- one sort, check all numbers for triplets
+Space O(n) -- 
+"""
+
+
+class Solution:
+    def threeSum(self, nums):
+        res = []
+        nums.sort()
+        for i in range(0, len(nums)-2):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            l, r = i+1, len(nums)-1
+            while l < r:
+                s = nums[i] + nums[l] + nums[r]
+                if s < 0:
+                    l +=1 
+                elif s > 0:
+                    r -= 1
+                else:
+                    res.append((nums[i], nums[l], nums[r]))
+                    while l < r and nums[l] == nums[l+1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r-1]:
+                        r -= 1
+                    l += 1; r -= 1
+        return res
+    
+    """
+        res = []
+        # two pointer solution O(n^2) time O(?) space
+        # sort the list
+        nums.sort()
+
+        # for each number in nums, check all possible non-duplicate triplet sums for success
+        # if sum is 0 and triplet is not duplicated, add to result list
+        for i in range(0, len(nums)-2):
+            # since list is sorted, if nums[i] == nums[i+1], we can skip the loop for this instance
+            # we only want distinct triplets
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+
+            l = i + 1
+            r = len(nums) - 1
+            while l < r:
+                s = nums[i] + nums[l] + nums[r]
+                # this only works because numbers are sorted
+                # if sum is too low, move left pointer to right
+                # if sum is too high, move right pointer to left
+                # if sum is 0, move l and r towards one another past duplicates and try again until exhausted
+                # then, move
+                if s < 0:
+                    l += 1
+                elif s > 0:
+                    r += 1
+                else:
+                    res.append((nums[i], nums[l], nums[r]))
+                    while l < r and nums[l] == nums[l+1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r-1]:
+                        r -= 1
+                    l += 1
+                    r -= 1
+        return res
+    """

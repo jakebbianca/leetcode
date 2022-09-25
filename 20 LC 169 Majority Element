@@ -1,0 +1,23 @@
+"""
+Majority Element
+Grind 75 #20
+LC #169 Easy
+
+Solution:
+time complexity = O(n) -- may have to traverse entire list
+space complexity = O(nlogn)
+"""
+
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        
+        dic = {}
+        
+        for i in nums:
+            if i not in dic:
+                dic[i] = 1
+            else:
+                dic[i] += 1
+                
+            if dic[i] > len(nums) / 2: return i

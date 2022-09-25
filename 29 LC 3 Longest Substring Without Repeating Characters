@@ -1,0 +1,82 @@
+"""
+Longest Substring Without Repeating Characters
+Grind 75 #29
+LC #3 Medium
+"""
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        
+        """
+        Dict/Hash Solution
+        Time = O(n)
+        Space = O(1) -- at most can be the constant amount of valid characters being held in dict at once
+        """
+        start = 0
+        ret = 0
+        
+        used = {}
+        
+        for i, ch in enumerate(s):
+            if ch in used and start <= used[ch]:
+                start = used[ch] + 1
+            else:
+                ret = max(ret, i - start + 1)
+            used[ch] = i
+            
+        return ret
+        
+        
+        
+        
+        """
+        Basic Iteration Solution
+        Time - O(nk)? iterate through n chars once, slice lists k times
+        Space = O(n)? O(1) -- Max space use would be a substring of all possible valid chars
+        """
+
+
+        # iterate through string
+        # build separate string, keeping track of length
+        # save longest string each time
+        # seems slow
+        
+        temp = ''
+        ret = 0
+        
+        for ch in s:
+            # find ch in temp string
+            # if not found, add to temp string
+            # in that case, check and update if we have a new longer substring
+            # if found, modify substring to exclude all characters at or before found index
+            # always add new character to temp string
+            tempIndex = temp.find(ch)
+            if tempIndex == -1:
+                if len(temp) + 1 > ret:
+                    ret += 1
+            else:
+                temp = temp[tempIndex+1:len(temp)]
+            temp += ch
+            
+        return ret
+    
+    
+        """
+        Queue Solution
+        Time = O(nk) - iteration and number of pops
+        Space = O(n), queue
+        """
+        # would queue be faster or better?
+        q = deque()
+        ret = 0
+        
+        for ch in s:
+            q.append(ch)
+            while q.count(ch) > 1:
+                q.popleft()
+            if len(q) > ret:
+                ret += 1
+                
+        return ret
+        

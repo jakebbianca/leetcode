@@ -1,0 +1,46 @@
+"""
+Binary Sum
+Grind 75 #21
+LC #67 Easy
+
+time complexity O(max(a,b)+1)
+space complexity O(max(a,b) - min(a,b))?
+"""
+
+
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        
+        # find max len of two strings
+        # fill shorter string with leading zeroes to match lengths
+        maxlen = max(len(a), len(b))
+        a = a.zfill(maxlen)
+        b = b.zfill(maxlen)
+        
+        # go through each string from right to left
+        # add to output string with either '0' or '1' based on sums
+        # carry binary sums as required
+        # if still carrying value after exhausting strings,
+        # add one more leading '1' and return
+        carry = 0
+        i = -1
+        res = ''
+        
+        while (abs(i) <= maxlen):
+            if a[i] == '1':
+                carry += 1
+            if b[i] == '1':
+                carry += 1
+                
+            if carry % 2 == 1:
+                res = '1' + res
+            else:
+                res = '0' + res
+                
+            carry //= 2    
+            i -= 1
+            
+        if carry > 0: res = '1' + res
+                
+        return res
+                

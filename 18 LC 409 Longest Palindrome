@@ -1,0 +1,29 @@
+"""
+Longest Palindrome
+Grind 75 #18
+LC #409 Easy
+
+Solution:
+time complexity = O(n)
+space complexity = O(logn)?? -- relative to length of s
+"""
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        
+        # we can add all even counts of each character in string to possible palidrome
+        # we can only have one character with odd count
+        # thus, if we keep a set of the characters with odd counts,
+        # we can use the length of the set to find the longest palindrome
+        hashset = set()
+        
+        for char in s:
+            if char not in hashset:
+                hashset.add(char)
+            else:
+                hashset.remove(char)
+        
+        # num of chars in string less chars with odd counts + 1 to allow for single odd count
+        # if no odd counts, palindrome can be length of full string
+        return len(s) - len(hashset) + 1 if len(hashset) > 0 else len(s)
